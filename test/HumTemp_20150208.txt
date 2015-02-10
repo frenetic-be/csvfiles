@@ -1,4 +1,4 @@
-### Temp electronics_box, Hum electronics_box, Status electronics_box, Temp enclosure, Hum enclosure, Status enclosure, Temp dome, Hum dome, Status dome
+### Time, Temp electronics_box, Hum electronics_box, Status electronics_box, Temp enclosure, Hum enclosure, Status enclosure, Temp dome, Hum dome, Status dome
 2015-02-08 12:00:25.556000,16.8,38.3,OK,16.3,25.9,OK,11.5,52.6,OK
 2015-02-08 12:01:09.687000,16.8,38.3,OK,16.3,25.8,OK,11.5,52.5,OK
 2015-02-08 12:01:53.682000,16.9,38.3,OK,16.3,25.8,OK,11.5,52.5,OK

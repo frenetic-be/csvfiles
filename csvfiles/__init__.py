@@ -3,7 +3,7 @@
 .. moduleauthor: Julien Spronck
 .. created: Feb 10, 2015
 
-Simple module to read .csv files and transfer the content into a dictionary.
+Simple module to read csv files and transfer the content into a dictionary.
 '''
 __version__ = '1.0'
 
@@ -38,7 +38,7 @@ def str2float(astr):
 
     Raises:
     '''
-    astr = astr.strip().replace(',','.')
+    astr = astr.strip().replace(',', '.')
     if astr == '':
         return 0.
     else:
@@ -47,7 +47,7 @@ def str2float(astr):
 def getdata(filename, fields=None, types=None, delimiter=',', skiplines=0,
             field_header=False):
     '''
-    Reads the .csv file and transfer the content into a dictionary.
+    Reads the csv file and transfer the content into a dictionary.
 
     Args:
         filename (str): file name.
@@ -66,14 +66,14 @@ def getdata(filename, fields=None, types=None, delimiter=',', skiplines=0,
             file to determine what the fields are. Defaults to False.
 
     Returns:
-        dictionary with content of the .csv file
+        dictionary with content of the csv file
 
     Raises:
         ValueError, TypeError
     '''
     # pylint: disable=E0611
     from numpy import append, array
-    # pylint: enable=E1103
+    # pylint: enable=E0611
 
 
     dic = {}
@@ -86,7 +86,7 @@ def getdata(filename, fields=None, types=None, delimiter=',', skiplines=0,
     with open(filename, mode='r') as fil:
 
         for line in fil:
-            row = line.split(delimiter)
+            row = line.strip('\r\n').split(delimiter)
             linecounter += 1
             if linecounter <= skiplines:
                 continue
@@ -97,10 +97,15 @@ def getdata(filename, fields=None, types=None, delimiter=',', skiplines=0,
                 elif isinstance(types, list) and len(types) == len(row):
                     theel = types[j](item)
                 elif isinstance(types, list) and len(types) != len(row):
-                    raise ValueError('types must be a function or a list of '+
-                                     'functions with the same '+
-                                     'length as the number of columns in the'+
-                                     ' csv file.')
+                    raise ValueError('fields must be a list '+
+                                     'of strings with the same length '+
+                                     'as the number of columns in the '+
+                                     'csv file. (line'+
+                                     ' {0}).'.format(linecounter)+
+                                     ' There are '+
+                                     '{0} columns'.format(len(fields))+
+                                     ' and '+str(len(row))+
+                                     ' entries in this row.')
                 elif types == None:
                     theel = item
                 else:
@@ -116,7 +121,12 @@ def getdata(filename, fields=None, types=None, delimiter=',', skiplines=0,
                         raise ValueError('fields must be a list '+
                                          'of strings with the same length '+
                                          'as the number of columns in the '+
-                                         'csv file.')
+                                         'csv file. (line'+
+                                         ' {0}).'.format(linecounter)+
+                                         ' There are '+
+                                         '{0} columns'.format(len(fields))+
+                                         ' and '+str(len(row))+
+                                         ' entries in this row.')
                 else:
                     if fields != None and len(fields) == len(row):
                         dic[fields[j]] = append(dic[fields[j]], theel)
@@ -130,7 +140,7 @@ def getdata(filename, fields=None, types=None, delimiter=',', skiplines=0,
 
 def getheader(filename, delimiter=','):
     '''
-    Reads the first line of the .csv file, split into an array of column
+    Reads the first line of the csv file, split into an array of column
     headers.
 
     Args:
@@ -138,7 +148,7 @@ def getheader(filename, delimiter=','):
         delimiter (str, optional): Delimiter. Defaults to ','.
 
     Returns:
-        list of column headers of the .csv file
+        list of column headers of the csv file
 
     Raises:
     '''
@@ -153,7 +163,7 @@ def plotdata(filename, xcol, ycols, field_header=False, delimiter=',',
              xlabel='', ylabel='', title='', linestyles=None,
              colors=None, markers=None, labels=None):
     '''
-    Creates a simple plot of the data in the .csv file.
+    Creates a simple plot of the data in the csv file.
 
     Args:
         filename (str): file name.
@@ -192,7 +202,7 @@ def plotdata(filename, xcol, ycols, field_header=False, delimiter=',',
     # pylint: disable=E0611
     from numpy import array, arange
     from matplotlib import pyplot as plt
-    # pylint: enable=E1103
+    # pylint: enable=E0611
 
     def col2data(dicti, column):
         '''
@@ -203,7 +213,7 @@ def plotdata(filename, xcol, ycols, field_header=False, delimiter=',',
                                                                  dicti.keys()))
         return array([str2float(data) for data in dicti[column]])
 
-    # Retrieve data from .csv file
+    # Retrieve data from csv file
     dic = getdata(filename, field_header=field_header, delimiter=delimiter)
 
     ydata = {}
@@ -239,3 +249,67 @@ def plotdata(filename, xcol, ycols, field_header=False, delimiter=',',
         plt.legend()
 
     plt.show()
+
+def write(filename, dic, delimiter=','):
+    '''
+    Writes dictionary of numpy arrays to a csv file.
+
+    Args:
+        filename (str): file name.
+        dic (dict): dictionary of numpy arrays.
+            All entries must have the same length.
+            If the keys to the dictionary are named, they will be used to
+            write the column headers
+        delimiter (str, optional): Defaults to ','.
+
+    Returns:
+
+    Raises:
+        ValueError, TypeError
+    '''
+    # pylint: disable=E0611
+    from numpy import ndarray
+    # pylint: enable=E0611
+    length = 0
+    for col in dic.itervalues():
+        if type(col) != ndarray:
+            raise TypeError('All entries in dictionary must be '+
+                            'numpy arrays')
+        if not length:
+            length = len(col)
+        else:
+            if len(col) != length:
+                raise ValueError('All entries in dictionary must have '+
+                                 'the same length')
+    header = ''
+    keys = dic.keys()
+    if keys != range(len(keys)):
+        header = delimiter.join(keys)
+
+    with open(filename, 'w') as fil:
+        if header:
+            fil.write(header+'\n')
+        for j in xrange(length):
+            entry = [dic[key][j] for key in keys]
+            entry = delimiter.join(entry)
+            fil.write(entry+'\n')
+
+def write_line(filename, *args, **kwargs):
+    '''
+    Writes dictionary of numpy arrays to a csv file.
+
+    Args:
+        filename (str): file name.
+        *args (): everything that you want to write in the file.
+            For example, write_line('test.csv', 1, 2, 'Blah', [3])
+            will write the following line in the file 'test.csv':
+                1,2,'Blah',[3]
+        delimiter (str, optional): Defaults to ','.
+
+    Returns:
+
+    Raises:
+    '''
+    delimiter = kwargs.pop('delimiter', ',')
+    with open(filename, 'a') as fil:
+        fil.write(delimiter.join(str(arg) for arg in args)+'\n')
