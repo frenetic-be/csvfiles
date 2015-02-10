@@ -38,6 +38,7 @@ def str2float(astr):
 
     Raises:
     '''
+    astr = astr.strip().replace(',','.')
     if astr == '':
         return 0.
     else:
@@ -200,7 +201,7 @@ def plotdata(filename, xcol, ycols, field_header=False, delimiter=',',
         if not column in dicti:
             raise KeyError('{0}. Possible values are {1}'.format(column,
                                                                  dicti.keys()))
-        return array([float(data) for data in dicti[column]])
+        return array([str2float(data) for data in dicti[column]])
 
     # Retrieve data from .csv file
     dic = getdata(filename, field_header=field_header, delimiter=delimiter)

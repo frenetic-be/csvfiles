@@ -1,0 +1,6 @@
+dist/csvfiles-1.0
+dist/.DS_Store
+test/.DS_Store
+.DS_Store
+build
+build*
