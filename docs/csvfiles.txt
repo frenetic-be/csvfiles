@@ -6,7 +6,7 @@ DESCRIPTION
     .. moduleauthor: Julien Spronck
     .. created: Feb 10, 2015
     
-    Simple module to read .csv files and transfer the content into a dictionary.
+    Simple module to read csv files and transfer the content into a dictionary.
 
 
 VERSION
@@ -16,7 +16,7 @@ VERSION
 FUNCTIONS
 
     getdata(filename, fields=None, types=None, delimiter=', skiplines=0, field_header=False)
-     |  Reads the .csv file and transfer the content into a dictionary.
+     |  Reads the csv file and transfer the content into a dictionary.
      |  
      |  Args:
      |      filename (str): file name.
@@ -35,13 +35,13 @@ FUNCTIONS
      |          file to determine what the fields are. Defaults to False.
      |  
      |  Returns:
-     |      dictionary with content of the .csv file
+     |      dictionary with content of the csv file
      |  
      |  Raises:
      |      ValueError, TypeError
 
     getheader(filename, delimiter=')
-     |  Reads the first line of the .csv file, split into an array of column
+     |  Reads the first line of the csv file, split into an array of column
      |  headers.
      |  
      |  Args:
@@ -49,12 +49,12 @@ FUNCTIONS
      |      delimiter (str, optional): Delimiter. Defaults to ','.
      |  
      |  Returns:
-     |      list of column headers of the .csv file
+     |      list of column headers of the csv file
      |  
      |  Raises:
 
     plotdata(filename, xcol, ycols, field_header=False, delimiter=', xlabel='', ylabel='', title='', linestyles=None, colors=None, markers=None, labels=None)
-     |  Creates a simple plot of the data in the .csv file.
+     |  Creates a simple plot of the data in the csv file.
      |  
      |  Args:
      |      filename (str): file name.
@@ -111,6 +111,37 @@ FUNCTIONS
      |  
      |  Returns:
      |      float.
+     |  
+     |  Raises:
+
+    write(filename, dic, delimiter=')
+     |  Writes dictionary of numpy arrays to a csv file.
+     |  
+     |  Args:
+     |      filename (str): file name.
+     |      dic (dict): dictionary of numpy arrays.
+     |          All entries must have the same length.
+     |          If the keys to the dictionary are named, they will be used to
+     |          write the column headers
+     |      delimiter (str, optional): Defaults to ','.
+     |  
+     |  Returns:
+     |  
+     |  Raises:
+     |      ValueError, TypeError
+
+    write_line(filename)
+     |  Writes dictionary of numpy arrays to a csv file.
+     |  
+     |  Args:
+     |      filename (str): file name.
+     |      *args (): everything that you want to write in the file.
+     |          For example, write_line('test.csv', 1, 2, 'Blah', [3])
+     |          will write the following line in the file 'test.csv':
+     |              1,2,'Blah',[3]
+     |      delimiter (str, optional): Defaults to ','.
+     |  
+     |  Returns:
      |  
      |  Raises:
 
