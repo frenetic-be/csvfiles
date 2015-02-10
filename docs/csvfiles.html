@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+ <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,300italic" rel="stylesheet" type="text/css">
+ <title>Software Documentation: __init__.py</title>
+ <link href="docu.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+ <div class="back-title">
+  <h1 class="title">Software Documentation: __init__.py</h1>
+ </div>
+ <div class="back-main">
+ <div class="main">
+ <div class="frame" id="nameframe">
+  <h4 class="frame-title">module name</h4>
+  <div class="frame-content">__init__</div>
+ </div>
+ <div class="frame" id="nameframe">
+  <h4 class="frame-title">version</h4>
+  <div class="frame-content">1.0</div>
+ </div>
+ <div class="frame" id="descriptionframe">
+  <h4 class="frame-title">DESCRIPTION</h4>
+  <pre class="frame-content">.. module: csvfiles</br>.. moduleauthor: Julien Spronck</br>.. created: Feb 10, 2015</br></br>Simple module to read .csv files and transfer the content into a dictionary.</pre>
+ </div>
+ <div class="frame" id="functionsframe">
+  <h4 class="frame-title">functions</h4>
+  <div class="frame-content">
+   <ul class="functions">
+    <li class="functions">
+     <div class="function">
+      <div class="function-name"><span class="function-name">getdata</span>(<span class="function-args">filename</span>, <span class="function-kw">fields</span>=<span class="function-kwdef">None</span>, <span class="function-kw">types</span>=<span class="function-kwdef">None</span>, <span class="function-kw">delimiter</span>=<span class="function-kwdef">'</span>, <span class="function-kw">skiplines</span>=<span class="function-kwdef">0</span>, <span class="function-kw">field_header</span>=<span class="function-kwdef">False</span>)</div>
+      <pre class="function-docstring">Reads the .csv file and transfer the content into a dictionary.</br></br>Args:</br>    filename (str): file name.</br>    fields (list of str, optional): list of fields or key for the output</br>        dictionary. This must have the same number of elements than the</br>        number of columns in your csv file. Defaults to None. If None, the</br>        keys to the output dictionary will simply be numbers from 0 to the</br>        number of columns - 1.</br>    types (function or list of function, optional): function or list of</br>        functions to convert the data from a string to what you want. You</br>        can use the functions csvfiles.str2date and csvfiles.str2float.</br>        Defaults to None. If None, the data type will be str.</br>    delimiter (str, optional): Delimiter. Defaults to ','.</br>    skiplines (int, optional): Skip the first n lines. Defaults to 0.</br>    field_header (bool, optional): If True, it uses the first line of the</br>        file to determine what the fields are. Defaults to False.</br></br>Returns:</br>    dictionary with content of the .csv file</br></br>Raises:</br>    ValueError, TypeError</pre>
+     </div>
+    </li>
+    <li class="functions">
+     <div class="function">
+      <div class="function-name"><span class="function-name">getheader</span>(<span class="function-args">filename</span>, <span class="function-kw">delimiter</span>=<span class="function-kwdef">'</span>)</div>
+      <pre class="function-docstring">Reads the first line of the .csv file, split into an array of column</br>headers.</br></br>Args:</br>    filename (str): file name.</br>    delimiter (str, optional): Delimiter. Defaults to ','.</br></br>Returns:</br>    list of column headers of the .csv file</br></br>Raises:</pre>
+     </div>
+    </li>
+    <li class="functions">
+     <div class="function">
+      <div class="function-name"><span class="function-name">plotdata</span>(<span class="function-args">filename</span>, <span class="function-args">xcol</span>, <span class="function-args">ycols</span>, <span class="function-kw">field_header</span>=<span class="function-kwdef">False</span>, <span class="function-kw">delimiter</span>=<span class="function-kwdef">'</span>, <span class="function-kw">xlabel</span>=<span class="function-kwdef">''</span>, <span class="function-kw">ylabel</span>=<span class="function-kwdef">''</span>, <span class="function-kw">title</span>=<span class="function-kwdef">''</span>, <span class="function-kw">linestyles</span>=<span class="function-kwdef">None</span>, <span class="function-kw">colors</span>=<span class="function-kwdef">None</span>, <span class="function-kw">markers</span>=<span class="function-kwdef">None</span>, <span class="function-kw">labels</span>=<span class="function-kwdef">None</span>)</div>
+      <pre class="function-docstring">Creates a simple plot of the data in the .csv file.</br></br>Args:</br>    filename (str): file name.</br>    xcol (str or int): name of column containing x data. If field_header is</br>        True, xcol is a str with the name returned by csvfiles.getheader().</br>        Else, it is an int representing the column number.</br>    ycols (str or int or list of str or list of int): name of column</br>        containing x data. If field_header is True, ycols is a str or a</br>        list of str with the names returned by csvfiles.getheader().</br>        Else, it is an int or a list of int representing the column numbers</br>        that you want to plot.</br>    field_header (bool, optional): If True, it uses the first line of the</br>        file to determine what the fields are. Defaults to False.</br>    delimiter (str, optional): Delimiter. Defaults to ','.</br>    xlabel (str, optional): plot label for x-axis. Defaults to ''.</br>    ylabel (str, optional): plot label for y-axis. Defaults to ''.</br>    title (str, optional): plot title. Defaults to ''.</br>    linestyles (list of str, optional): plot line styles (see matplotlib</br>        line styles). If provided, this must be a list that has the same</br>        length as the number of columns to plot (ycols). Defaults to None.</br>    colors (list of str, optional): . plot colors (see matplotlib</br>        colors). If provided, this must be a list that has the same</br>        length as the number of columns to plot (ycols). Defaults to None.</br>    markers (list of str, optional): plot markers (see matplotlib</br>        markers). If provided, this must be a list that has the same</br>        length as the number of columns to plot (ycols). Defaults to None.</br>    labels (list of str, optional): line labels (see matplotlib</br>        line labels). If provided, this must be a list that has the same</br>        length as the number of columns to plot (ycols). Defaults to None.</br>        If not None, this argument creates a legend with the provided</br>        labels.</br>Returns:</br></br>Raises:</pre>
+     </div>
+    </li>
+    <li class="functions">
+     <div class="function">
+      <div class="function-name"><span class="function-name">str2date</span>(<span class="function-args">datestr</span>, <span class="function-kw">date_format</span>=<span class="function-kwdef">'%Y-%m-%d %H:%M:%S'</span>)</div>
+      <pre class="function-docstring">Converts a string to a datetime object.</br></br>Args:</br>    datestr (str): the string.</br>    date_format (str, optional): The date format. Defaults to</br>        '%Y-%m-%d %H:%M:%S'.</br></br>Returns:</br>    datetime object.</br>Raises:</pre>
+     </div>
+    </li>
+    <li class="functions">
+     <div class="function">
+      <div class="function-name"><span class="function-name">str2float</span>(<span class="function-args">astr</span>)</div>
+      <pre class="function-docstring">Converts a string to a float. The only difference with float() is that</br>this returns 0 if the string is empty.</br></br>Args:</br>    astr (str): the string.</br></br>Returns:</br>    float.</br></br>Raises:</pre>
+     </div>
+    </li>
+   </ul>
+  </div>
+ </div> 
+</body>
+</html>
